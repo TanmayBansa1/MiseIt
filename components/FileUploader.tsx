@@ -1,0 +1,52 @@
+'use client'
+import React, { useCallback } from 'react'
+import { useDropzone } from 'react-dropzone'
+import { Button } from './ui/button'
+import { cn, getFileType } from '@/lib/utils'
+import Image from 'next/image'
+import { useState } from 'react'
+import Thumbnail from './Thumbnail'
+import { getDefaultAutoSelectFamilyAttemptTimeout } from 'net'
+
+
+const FileUploader = ({className, ownerId, accountId}:{className: string, ownerId: string, accountId: string}) => {
+    
+    const [files,setFiles] = useState<File[]>([])
+    
+    const onDrop = useCallback((acceptedFiles: File[]) => {
+        // Do something with the files
+        setFiles(acceptedFiles);
+    }, [])
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+    return (
+        <div {...getRootProps()} className='cursor-pointer'>
+            <input {...getInputProps()} />
+            <Button className={cn('uploader-button', className)}>
+               <Image src='/assets/icons/upload.svg' alt='upload' width={24} height={24} className='h-auto'></Image> Upload</Button>
+               <div>
+                    <ul className='uploader-preview-list'>
+                        {files.map((file,index)=>{
+                            const {type, extension} = getFileType(file.name);
+                            return (
+                                <li key={`${file.name}-${index}`} className='uploader-preview-item'>
+                                    <div className='flex items-center gap-3'>
+                                        <Thumbnail type={type} extension={extension} />
+                                    </div>
+
+                                </li>
+                            )
+                        })}
+
+                    </ul>
+               </div>
+            {
+                isDragActive ?
+                    <p>Drop the files here ...</p> :
+                    <p>Drag 'n' drop some files here, or click to select files</p>
+            }
+        </div>
+    )
+}
+
+export default FileUploader

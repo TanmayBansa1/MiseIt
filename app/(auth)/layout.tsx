@@ -6,7 +6,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         <div className='flex min-h-screen w-full'>
             <section className='hidden lg:flex lg:flex-col w-1/2 xl:w-2/5 overflow-hidden h-screen bg-sky-900'>
                 <div className='pt-10 pl-10 pr-10 pb-5 max-h-[800px] max-w-[430px]'>
-                    <Image src='/favicon.ico' alt='logo' width={85} height={85}>
+                    <Image src='/assets/images/storeitlogo.png' alt='logo' width={85} height={85}>
 
                     </Image>
                     <h1 className='text-6xl font-semibold text-white py-6 '>

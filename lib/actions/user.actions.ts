@@ -1,10 +1,11 @@
 'use server'
 
 import { ID, Models, Query } from "node-appwrite"
-import { createAdminClient } from "../appwrite"
+import { createAdminClient, createSessionClient } from "../appwrite"
 import { appwriteConfig } from "../appwrite/config"
 import { parseStringify } from "../utils"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
 async function getuserByEmail(email: string) {
        const {database} = await createAdminClient()
@@ -104,4 +105,39 @@ export const signInUser = async ({email}:{email: string}) => {
         console.error("Error in signInUser:", error);
         throw error;
     }
+}
+
+export const getCurrentUser = async()=>{
+    const {account, database} = await createSessionClient();
+
+    const result = await account.get();
+
+    const user = await database.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.usersCollectionId,
+        [Query.equal("accountId", [result.$id])]
+    )
+
+    if(user.total <= 0){return null}
+    return parseStringify(user.documents[0])
+
+}
+
+export const signOutUser = async () => {
+
+    const { account } = await createSessionClient()
+    try{
+
+        await account.deleteSession('current');
+        (await cookies()).delete('appwrite-session')
+        redirect('/sign-in')
+
+    }catch(err){
+        console.log(err, "Failed to sign out user");
+        throw new Error("Failed to sign out user");
+    }finally{
+        redirect('/sign-in')
+    }
+
+
 }

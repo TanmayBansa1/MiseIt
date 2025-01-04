@@ -31,6 +31,7 @@ const OTPModal = (props: Props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [otp, setOtp] = useState('')
     const router = useRouter()
+    const [errorMessage, setErrorMessage] = useState('')
 
     const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -47,6 +48,7 @@ const OTPModal = (props: Props) => {
             }
         }catch(err){
             console.log(err, "Failed to verify OTP");
+            setErrorMessage("Invalid OTP");
             throw err;
         }finally{
             setIsLoading(false)
@@ -59,6 +61,7 @@ const OTPModal = (props: Props) => {
             await sendEmailOTP(props.email)
         }catch(err){
             console.log(err, "Failed to resend OTP");
+            setErrorMessage("Failed to resend OTP");
             throw err;
         }finally{
             setIsLoading(false)
@@ -118,8 +121,14 @@ const OTPModal = (props: Props) => {
                         <div className='text-center text-sm text-light-100'>
                             Didn't receive the code?<Button variant={'link'} onClick={handleResend} className=' font-medium cursor-pointer'>Resend</Button>
                         </div>
+                        {errorMessage && (
+                            <div className='text-center text-sm text-error'>
+                                {errorMessage}
+                            </div>)
+                        }
                     </div>
                 </AlertDialogFooter>
+                
             </AlertDialogContent>
         </AlertDialog>
 
