@@ -19,10 +19,11 @@ import { Button } from './ui/button'
 import FileUploader from './FileUploader'
 import { signOutUser } from '@/lib/actions/user.actions'
 
-const MobileNavigation = ({ user }: { user: { fullname: string, email: string, avatarUrl: string } }) => {
+const MobileNavigation = ({ user }: { user: { fullname: string, email: string, avatarUrl: string, accountId: string, $id: string} }) => {
 
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  // console.log(user)
   return (
     <header className='mobile-header mt-5' >
       <Image src='/assets/images/storeitlogo.png' alt='logo' width={60} height={60} className='h-auto '>
@@ -60,7 +61,7 @@ const MobileNavigation = ({ user }: { user: { fullname: string, email: string, a
             </nav>
             <Separator className='my-5 bg-light-200/20'></Separator>
             <div className="flex flex-col justify-between gap-5">
-              {/* <FileUploader></FileUploader> */}
+              <FileUploader ownerId={user.$id} accountId={user.accountId}></FileUploader>
               <Button type='submit' className='mobile-sign-out-button'
               onClick={async () => { await signOutUser()}}>
                 <Image src='/assets/icons/logout.svg' alt='logout' width={24} height={24}></Image>

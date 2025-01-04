@@ -2,8 +2,12 @@ import React from 'react'
 import { Button } from './ui/button'
 import Image from 'next/image'
 import { signOutUser } from '@/lib/actions/user.actions'
+import FileUploader from './FileUploader'
 
-type Props = {}
+type Props = {
+  ownerId: string,
+  accountId: string
+}
 
 const Header = (props: Props) => {
   return (
@@ -11,7 +15,7 @@ const Header = (props: Props) => {
         Search
 
         <div className='header-wrapper'>
-            FileUploader
+            <FileUploader ownerId={props.ownerId} accountId={props.accountId}></FileUploader>
             <form action={async ()=>{
               'use server'
               await signOutUser();

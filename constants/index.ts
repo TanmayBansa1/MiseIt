@@ -77,6 +77,7 @@ export const navItems = [
     },
     {
       label: "Size (Lowest)",
+      
       value: "size-asc",
     },
   ];
