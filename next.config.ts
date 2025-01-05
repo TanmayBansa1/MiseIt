@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "500mb"
     }
+  },
+  images:{
+    domains: ['cloud.appwrite.io']
   }
   /* config options here */
 };
