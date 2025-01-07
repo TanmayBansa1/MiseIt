@@ -33,7 +33,7 @@ export async function uploadFile({file, ownerId, accountId, path}: UploadFilePro
                 owner: ownerId,
                 accountId,
                 size: bucketFile.sizeOriginal,
-                bucketfield: bucketFile.$id,
+                bucketFileId: bucketFile.$id,
                 users: []
             }
 
