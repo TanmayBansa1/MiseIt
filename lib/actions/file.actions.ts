@@ -1,5 +1,5 @@
 'use server'
-import { UploadFileProps } from "@/types";
+import { RenameFileProps, UpdateFileUsersProps, UploadFileProps } from "@/types";
 import { createAdminClient } from "../appwrite";
 import { InputFile } from "node-appwrite/file";
 import { appwriteConfig } from "../appwrite/config";
@@ -85,6 +85,47 @@ export async function getFiles(){
     }catch(err){
 
         console.log(err, "Failed to get files");
+        throw err;
+    }
+}
+
+export async function renameFile( {fileId, name, extension, path}: RenameFileProps){
+
+    const {database} = await createAdminClient();
+    try{
+        const updatedFile = await database.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            fileId,
+            {
+                name,
+                extension
+            }
+        )
+        revalidatePath(path)
+        return parseStringify(updatedFile)
+    } catch(err){
+        console.log(err, "Failed to rename file");
+        throw err;
+    }
+}
+
+export async function shareFile( {fileId, path, emails}: UpdateFileUsersProps){
+
+    const {database} = await createAdminClient();
+    try{
+        const updatedFile = await database.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            fileId,
+            {
+                users: emails
+            }
+        )
+        revalidatePath(path)
+        return parseStringify(updatedFile)
+    } catch(err){
+        console.log(err, "Failed to share file");
         throw err;
     }
 }

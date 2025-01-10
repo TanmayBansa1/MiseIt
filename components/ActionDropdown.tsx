@@ -1,9 +1,10 @@
 'use client'
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -23,24 +24,96 @@ import { actionsDropdownItems } from '@/constants'
 import { ActionType } from '@/types'
 import Link from 'next/link'
 import { constructDownloadUrl } from '@/lib/utils'
+import { Input } from './ui/input'
+import { Button } from './ui/button'
+import { renameFile, shareFile } from '@/lib/actions/file.actions'
+import { usePathname } from 'next/navigation'
+import { FileDetails, ShareInput } from './ActionsModalContent'
 
 
 const ActionDropdown = ({ file }: { file: Models.Document }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [action, setAction] = useState<ActionType | null>(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const renderDialogContent =  () => {
+  const [name, setName] = useState(file.name)
+  const [isLoading, setIsLoading] = useState(false)
+  const [emails, setEmails] = useState<string[]>([])
+  const path = usePathname();
+  const closeAllModals = ()=>{
+    setIsOpen(false)
+    setIsDropdownOpen(false)
+    setName(file.name)
+    setAction(null)
+  }
 
+  const handleAction = async (action: ActionType) => {
+    if(!action) return null;
+    setIsLoading(true)
+    let success = false;
+    const actions = {
+      rename: async ()=>{
+        try {
+          await renameFile({fileId: file.$id, name, extension: file.extension, path});
+          return true;
+        } catch (error) {
+          console.error('Error renaming file:', error);
+          return false;
+        }
+      },
+      share: async ()=>{
+        try {
+          await shareFile({fileId: file.$id, emails, path});
+          return true;
+        } catch (error) {
+          console.error('Error sharing file:', error);
+          return false;
+        }
+      },
+      delete: async ()=>{
+        try {
+          // TODO: Implement delete functionality
+          return true;
+        } catch (error) {
+          console.error('Error deleting file:', error);
+          return false;
+        }
+      },
+    }
+    success = await actions[action.value as keyof typeof actions]();
+    if(success){
+      closeAllModals()
+    }
+    setIsLoading(false)
+  }
+  const renderDialogContent =  () => {
+    if(!action) return null;
+    const {value, label} = action
     return (
 
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
-            </DialogDescription>
+        <DialogContent className='shad-dialog-button'>
+          <DialogHeader className='flex flex-col gap-3'>
+            <DialogTitle className='text-center text-light-100'>{label}</DialogTitle>
+            {value === 'rename' && <Input value={name} onChange={(e: ChangeEvent<HTMLInputElement>)=>{
+              setName(e.target.value)
+            }}></Input>
+            }
+            {value === 'share' && <ShareInput file={file}></ShareInput>}
+            {value === 'details' && <FileDetails file={file}></FileDetails> }  
           </DialogHeader>
+          {['rename','share','delete'].includes(value) && (
+            <DialogFooter className='flex flex-col gap-3 md:flex-row'>
+              <Button onClick={closeAllModals} className='modal-cancel-button'>
+                Cancel
+              </Button>
+              <Button onClick={() => handleAction(action)} className='modal-submit-button'>
+                <p className='capitalize'>{label}</p>
+                {isLoading && (
+                  <Image src='/assets/icons/loader.svg' alt='loading' width={24} height={24} className='animate-spin'></Image>
+                )}
+              </Button>
+
+            </DialogFooter>
+          )}
         </DialogContent>
 
     )

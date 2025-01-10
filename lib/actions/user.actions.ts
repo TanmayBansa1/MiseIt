@@ -7,7 +7,7 @@ import { parseStringify } from "../utils"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-async function getuserByEmail(email: string) {
+export async function getuserByEmail(email: string) {
        const {database} = await createAdminClient()
 
        const result = await database.listDocuments(
