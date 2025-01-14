@@ -59,7 +59,7 @@ const FileUploader = ({ className, ownerId, accountId }: { className?: string, o
                         return (
                             <li key={`${file.name}-${index}`} className='uploader-preview-item'>
                                 <div className='flex items-center gap-3'>
-                                    <Thumbnail type={type} extension={extension} url={convertFileToUrl(file)} />
+                                    <Thumbnail className='!size-11' imageClassName='!size-8' type={type} extension={extension} url={convertFileToUrl(file)} />
                                     <div className='preview-item-name'>
                                         {file.name}
                                         <Image src='/assets/icons/file-loader.gif'

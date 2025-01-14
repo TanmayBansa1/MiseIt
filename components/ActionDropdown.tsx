@@ -1,15 +1,12 @@
-'use client'
-import React, { ChangeEvent, useState } from 'react'
+"use client";
+
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,143 +14,230 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Image from 'next/image'
-import { Models } from 'node-appwrite'
-import { actionsDropdownItems } from '@/constants'
-import { ActionType } from '@/types'
-import Link from 'next/link'
-import { constructDownloadUrl } from '@/lib/utils'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
-import { renameFile, shareFile } from '@/lib/actions/file.actions'
-import { usePathname } from 'next/navigation'
-import { FileDetails, ShareInput } from './ActionsModalContent'
-
+} from "@/components/ui/dropdown-menu";
+import { useState } from "react";
+import Image from "next/image";
+import { Models } from "node-appwrite";
+import { actionsDropdownItems } from "@/constants";
+import Link from "next/link";
+import { constructDownloadUrl } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  deleteFile,
+  renameFile,
+  shareFile,
+} from "@/lib/actions/file.actions";
+import { usePathname } from "next/navigation";
+import { FileDetails, ShareInput } from "@/components/ActionsModalContent";
+import { ActionType } from "@/types";
+import { useToast } from "@/hooks/use-toast";
+import { getCurrentUser } from "@/lib/actions/user.actions";
 
 const ActionDropdown = ({ file }: { file: Models.Document }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [action, setAction] = useState<ActionType | null>(null)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [name, setName] = useState(file.name)
-  const [isLoading, setIsLoading] = useState(false)
-  const [emails, setEmails] = useState<string[]>([])
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [action, setAction] = useState<ActionType | null>(null);
+  const [name, setName] = useState(file.name);
+  const [isLoading, setIsLoading] = useState(false);
+  const [emails, setEmails] = useState<string[]>([]);
+  const { toast } = useToast();
   const path = usePathname();
-  const closeAllModals = ()=>{
-    setIsOpen(false)
-    setIsDropdownOpen(false)
-    setName(file.name)
-    setAction(null)
-  }
 
-  const handleAction = async (action: ActionType) => {
-    if(!action) return null;
-    setIsLoading(true)
+  const closeAllModals = () => {
+    setIsModalOpen(false);
+    setIsDropdownOpen(false);
+    setAction(null);
+    setName(file.name);
+    // setEmails([]);
+  };
+
+  const handleAction = async () => {
+    if (!action) return;
+    setIsLoading(true);
     let success = false;
+
     const actions = {
-      rename: async ()=>{
-        try {
-          await renameFile({fileId: file.$id, name, extension: file.extension, path});
-          return true;
-        } catch (error) {
-          console.error('Error renaming file:', error);
-          return false;
+      rename: () =>
+        renameFile({ fileId: file.$id, name, extension: file.extension, path }),
+      share: () => shareFile({ fileId: file.$id, emails, path }),
+      delete: async () => {
+        const currUser = await getCurrentUser();
+        if (currUser.email !== file.owner.email) {
+          await handleRemoveUser(currUser.email, true);
+          toast({
+            title: `File ${file.name} deleted`
+          })
+          return;
         }
-      },
-      share: async ()=>{
-        try {
-          await shareFile({fileId: file.$id, emails, path});
-          return true;
-        } catch (error) {
-          console.error('Error sharing file:', error);
-          return false;
-        }
-      },
-      delete: async ()=>{
-        try {
-          // TODO: Implement delete functionality
-          return true;
-        } catch (error) {
-          console.error('Error deleting file:', error);
-          return false;
-        }
-      },
-    }
+        deleteFile({ fileId: file.$id, bucketFileId: file.bucketFileId, path });
+        toast({
+          title: `File ${file.name} deleted`
+        })
+        return;
+      }
+    };
+
     success = await actions[action.value as keyof typeof actions]();
-    if(success){
-      closeAllModals()
+
+    if (success) closeAllModals();
+
+    setIsLoading(false);
+  };
+
+  const handleRemoveUser = async (email: string, isDelete?: boolean) => {
+    const currUser = await getCurrentUser();
+    if (currUser.email !== file.owner.email && !isDelete) {
+      toast({
+        title: "Access denied",
+        description: "You do not have permission to perform this action",
+        variant: "destructive",
+      });
+      return;
     }
-    setIsLoading(false)
-  }
-  const renderDialogContent =  () => {
-    if(!action) return null;
-    const {value, label} = action
+
+    const updatedEmails = emails.filter((e) => e !== email);
+
+    const success = await shareFile({
+      fileId: file.$id,
+      emails: updatedEmails,
+      path,
+    });
+
+    if (success){
+      setEmails(updatedEmails);
+      toast({
+        title: `User ${email} removed from file ${file.name}`
+      })
+      return true;
+    } else{
+      toast({
+        title: "Error removing user",
+        description: "Failed to remove user from file"
+      })
+    }
+  };
+
+  const renderDialogContent = () => {
+    if (!action) return null;
+
+    const { value, label } = action;
+
     return (
-
-        <DialogContent className='shad-dialog-button'>
-          <DialogHeader className='flex flex-col gap-3'>
-            <DialogTitle className='text-center text-light-100'>{label}</DialogTitle>
-            {value === 'rename' && <Input value={name} onChange={(e: ChangeEvent<HTMLInputElement>)=>{
-              setName(e.target.value)
-            }}></Input>
-            }
-            {value === 'share' && <ShareInput file={file}></ShareInput>}
-            {value === 'details' && <FileDetails file={file}></FileDetails> }  
-          </DialogHeader>
-          {['rename','share','delete'].includes(value) && (
-            <DialogFooter className='flex flex-col gap-3 md:flex-row'>
-              <Button onClick={closeAllModals} className='modal-cancel-button'>
-                Cancel
-              </Button>
-              <Button onClick={() => handleAction(action)} className='modal-submit-button'>
-                <p className='capitalize'>{label}</p>
-                {isLoading && (
-                  <Image src='/assets/icons/loader.svg' alt='loading' width={24} height={24} className='animate-spin'></Image>
-                )}
-              </Button>
-
-            </DialogFooter>
+      <DialogContent className="shad-dialog button">
+        <DialogHeader className="flex flex-col gap-3">
+          <DialogTitle className="text-center text-light-100">
+            {label}
+          </DialogTitle>
+          {value === "rename" && (
+            <Input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           )}
-        </DialogContent>
+          {value === "details" && <FileDetails file={file} />}
+          {value === "share" && (
+            <ShareInput
+              file={file}
+              onInputChange={setEmails}
+              onRemove={handleRemoveUser}
+            />
+          )}
+          {value === "delete" && (
+            <p className="delete-confirmation">
+              Are you sure you want to delete{` `}
+              <span className="delete-file-name">{file.name}</span>?
+            </p>
+          )}
+        </DialogHeader>
+        {["rename", "delete", "share"].includes(value) && (
+          <DialogFooter className="flex flex-col gap-3 md:flex-row">
+            <Button onClick={closeAllModals} className="modal-cancel-button">
+              Cancel
+            </Button>
+            <Button onClick={handleAction} className="modal-submit-button">
+              <p className="capitalize">{value}</p>
+              {isLoading && (
+                <Image
+                  src="/assets/icons/loader.svg"
+                  alt="loader"
+                  width={24}
+                  height={24}
+                  className="animate-spin"
+                />
+              )}
+            </Button>
+          </DialogFooter>
+        )}
+      </DialogContent>
+    );
+  };
 
-    )
-
-  }
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
-        <DropdownMenuTrigger className='shad-no-focus'>
-          <Image src='/assets/icons/dots.svg' alt='Menu' width={20} height={15} className='h-auto'></Image>
+        <DropdownMenuTrigger className="shad-no-focus">
+          <Image
+            src="/assets/icons/dots.svg"
+            alt="dots"
+            width={34}
+            height={34}
+          />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel className='max-w-[200px] truncate'>{file.name}</DropdownMenuLabel>
+          <DropdownMenuLabel className="max-w-[200px] truncate">
+            {file.name}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {actionsDropdownItems.map((actionitem) => (
-            <DropdownMenuItem onClick={() => {
-              setAction(actionitem)
-              if (['rename', 'delete', 'share', 'details'].includes(actionitem.value)) {
-                setIsOpen(true)
-              }
-            }} className='shad-dropdown-item' key={actionitem.value}>
-              {actionitem.value === 'download' ? (<Link href={constructDownloadUrl(file.bucketFileId)} download={file.name} className='flex items-center gap-2'>
-                <Image src={actionitem.icon} alt={actionitem.label} width={30} height={30}></Image>
-                <span>{actionitem.label}</span>
-              </Link>) : (
-                <div className='flex items-center gap-2'>
-                  <Image src={actionitem.icon} alt={actionitem.label} width={30} height={30}></Image>
-                  <span>{actionitem.label}</span>
+          {actionsDropdownItems.map((actionItem) => (
+            <DropdownMenuItem
+              key={actionItem.value}
+              className="shad-dropdown-item"
+              onClick={() => {
+                setAction(actionItem);
+
+                if (
+                  ["rename", "share", "delete", "details"].includes(
+                    actionItem.value,
+                  )
+                ) {
+                  setIsModalOpen(true);
+                }
+              }}
+            >
+              {actionItem.value === "download" ? (
+                <Link
+                  href={constructDownloadUrl(file.bucketFileId)}
+                  download={file.name}
+                  className="flex items-center gap-2"
+                >
+                  <Image
+                    src={actionItem.icon}
+                    alt={actionItem.label}
+                    width={30}
+                    height={30}
+                  />
+                  {actionItem.label}
+                </Link>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={actionItem.icon}
+                    alt={actionItem.label}
+                    width={30}
+                    height={30}
+                  />
+                  {actionItem.label}
                 </div>
               )}
             </DropdownMenuItem>
           ))}
-
         </DropdownMenuContent>
       </DropdownMenu>
 
       {renderDialogContent()}
     </Dialog>
-
-  )
-}
-
-export default ActionDropdown
+  );
+};
+export default ActionDropdown;
