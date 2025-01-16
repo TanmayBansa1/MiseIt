@@ -3,6 +3,7 @@ import { Button } from './ui/button'
 import Image from 'next/image'
 import { signOutUser } from '@/lib/actions/user.actions'
 import FileUploader from './FileUploader'
+import  Search  from '@/components/Search'
 
 type Props = {
   ownerId: string,
@@ -12,7 +13,7 @@ type Props = {
 const Header = (props: Props) => {
   return (
     <div className='header'>
-        Search
+        <Search></Search>
 
         <div className='header-wrapper'>
             <FileUploader ownerId={props.ownerId} accountId={props.accountId}></FileUploader>

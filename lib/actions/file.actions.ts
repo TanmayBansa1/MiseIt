@@ -1,5 +1,5 @@
 'use server'
-import { DeleteFileProps, RenameFileProps, UpdateFileUsersProps, UploadFileProps } from "@/types";
+import { DeleteFileProps, GetFilesProps, RenameFileProps, UpdateFileUsersProps, UploadFileProps } from "@/types";
 import { createAdminClient } from "../appwrite";
 import { InputFile } from "node-appwrite/file";
 import { appwriteConfig } from "../appwrite/config";
@@ -51,18 +51,31 @@ export async function uploadFile({file, ownerId, accountId, path}: UploadFilePro
     }
 }
 
-const createQueries = (user: Models.Document) => {
+const createQueries = (user: Models.Document, types: string[], searchText: string, sort: string, limit?: number) => {
    const queries = [
     Query.or([
         Query.equal('owner', [user.$id]),
         Query.contains('users', [user.email]),
     ])
    ] 
+   if(types.length > 0){
+    queries.push(Query.equal('type', types))
+   }
+   if(searchText){
+    queries.push(Query.contains('name', searchText))
+   }
+   if(limit){
+    queries.push(Query.limit(limit))
+   }
+   if(sort){
+    const [sortBy, orderBy] = sort.split('-');
+    orderBy === 'asc' ? queries.push(Query.orderAsc(sortBy)) : queries.push(Query.orderDesc(sortBy))
+   }
 
    return queries;
 }
 
-export async function getFiles(){
+export async function getFiles({types = [], searchText = "", sort = "$createdAt-desc", limit}: GetFilesProps){
 
     const {database} = await createAdminClient();
 
@@ -70,7 +83,7 @@ export async function getFiles(){
         const currUser = await getCurrentUser();
         if(!currUser) return new Error("User not found");
 
-        const queries = createQueries(currUser);
+        const queries = createQueries(currUser, types, searchText, sort, limit);
         const files = await database.listDocuments(
             appwriteConfig.databaseId,
             appwriteConfig.filesCollectionId,
