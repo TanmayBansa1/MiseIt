@@ -8,7 +8,12 @@
   }
 
   body {
-    @apply bg-white text-dark-200 min-h-screen;
+    @apply bg-white text-dark-200 min-h-screen remove-scrollbar;
+  }
+
+  
+  #__next {
+    @apply h-full;
   }
 
   /* Remove scrollbar */
@@ -31,7 +36,6 @@
     /* background: #1e2238; */
     background: transparent;
   }
-
   .recharts-responsive-container {
     height: initial !important;
   }
@@ -202,10 +206,11 @@
 
   /* Root Layout */
   .main-content {
-    @apply remove-scrollbar h-full flex-1 overflow-auto bg-light-400 px-5 py-7 sm:mr-7 sm:rounded-[30px] md:mb-7 md:px-9 md:py-10 !important;
+    @apply remove-scrollbar h-[calc(100vh-120px)] overflow-auto bg-light-400 px-5 py-7 sm:mr-7 sm:rounded-[30px] md:mb-7 md:px-9 md:py-10 !important;
   }
+  
 
-  /* Dashboard */
+  /* ard */
   .dashboard-container {
     @apply mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 xl:gap-10 !important;
   }
@@ -319,13 +324,13 @@
 
   /* Chart */
   .chart {
-    @apply flex items-center rounded-[20px] bg-brand p-5 text-white md:flex-col xl:flex-row !important;
+    @apply flex items-center rounded-[20px] hover:shadow-drop-3 hover:shadow-sky-900/20 hover:scale-105 hover:bg-sky-900/80 bg-sky-800 p-5 text-white md:flex-col xl:flex-row !important;
   }
   .chart-container {
     @apply mx-auto aspect-square w-[180px] text-white xl:w-[250px] !important;
   }
   .polar-grid {
-    @apply first:fill-white/20 last:fill-brand !important;
+    @apply first:fill-white/20 last:fill-sky-950 hover:last:fill-sky-900/95 !important;
   }
   .chart-details {
     @apply flex-1 items-start px-3 py-0 sm:px-5 lg:p-3 xl:pr-5 !important;

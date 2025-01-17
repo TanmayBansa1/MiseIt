@@ -1,5 +1,5 @@
 'use server'
-import { DeleteFileProps, GetFilesProps, RenameFileProps, UpdateFileUsersProps, UploadFileProps } from "@/types";
+import { DeleteFileProps, FileType, GetFilesProps, RenameFileProps, UpdateFileUsersProps, UploadFileProps } from "@/types";
 import { createAdminClient } from "../appwrite";
 import { InputFile } from "node-appwrite/file";
 import { appwriteConfig } from "../appwrite/config";
@@ -163,6 +163,42 @@ export async function deleteFile( {fileId, bucketFileId, path}: DeleteFileProps)
         return parseStringify({status: "successfully deleted file"})
     } catch(err){
         console.log(err, "Failed to delete file");
+        throw err;
+    }
+
+}
+
+export async function getTotalSpaceUsed(){
+
+    const {database} = await createAdminClient();
+    const currUser = await getCurrentUser();
+    try{
+        const files = await database.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            [Query.equal('owner', [currUser.$id])]
+        )
+        const totalSpace = {
+            image: {size: 0, latestDate: ''},
+            video: {size: 0, latestDate: ''},
+            audio: {size: 0, latestDate: ''},
+            document: {size: 0, latestDate: ''},
+            other: {size: 0, latestDate: ''},
+            used: 0,
+            all: 2*1024*1024*1024
+        }
+
+        files.documents.map((file: Models.Document) => {
+            const fileType = getFileType(file.name).type as FileType;
+            totalSpace[fileType].size += file.size;
+            totalSpace[fileType].latestDate = file.$updatedAt > totalSpace[fileType].latestDate ? file.$updatedAt : totalSpace[fileType].latestDate;
+            totalSpace.used += file.size;
+
+        })
+        return parseStringify(totalSpace)
+
+    }catch(err){
+        console.log(err, "Failed to get total space used");
         throw err;
     }
 

@@ -85,7 +85,7 @@ const OTPModal = (props: Props) => {
 
                     </AlertDialogTitle>
                     <AlertDialogDescription className='text-light-100 text-center '>
-                        We have sent an OTP to <span className='font-medium text-sky-900 pl-1'>{props.email} alsd@gmail.com</span>
+                        We have sent an OTP to <span className='font-medium text-sky-900 pl-1'>{props.email}</span>
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <InputOTP maxLength={6} value={otp} onChange={(otp) => setOtp(otp)}>

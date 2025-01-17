@@ -30,6 +30,17 @@ export const calculatePercentage = (sizeInBytes: number) => {
   const percentage = (sizeInBytes / totalSizeInBytes) * 100;
   return Number(percentage.toFixed(2));
 };
+export function calculateAngle(used: number): number {
+  // Add 2^30 (1073741824) to the used value
+  // This seems to be a scaling or normalization technique
+  const scaledValue = used + 1073741824;
+
+  // Convert to radians and calculate the angle
+  // The division by 2^30 suggests a normalization to a full circle (360 degrees)
+  const angle = (scaledValue / 1073741824) * 360;
+
+  return angle;
+}
 
 export const getFileType = (fileName: string) => {
   const extension = fileName.split(".").pop()?.toLowerCase();

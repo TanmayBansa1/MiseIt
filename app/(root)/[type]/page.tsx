@@ -1,10 +1,10 @@
 import { SearchParamProps } from '@/types'
 import React from 'react'
-import { getFiles } from '@/lib/actions/file.actions'
+import { getFiles, getTotalSpaceUsed } from '@/lib/actions/file.actions'
 import { Models } from 'node-appwrite'
 import Sort from '@/components/Sort'
 import Filecard from '@/components/Filecard'
-import { getFileTypesParams, FileType } from '@/lib/utils'
+import { getFileTypesParams, FileType, convertFileSize } from '@/lib/utils'
 
 const page = async ({searchParams,params}: SearchParamProps) => {
 
@@ -13,6 +13,7 @@ const page = async ({searchParams,params}: SearchParamProps) => {
     const searchText = ((await searchParams)?.query as string) || "";
     const sort = ((await searchParams)?.sort as string) || "";
     const files = await getFiles({types,searchText,sort});
+    const totalSpace = await getTotalSpaceUsed();
   return (
     <div className='page-container'>
         <section className='w-full'>
@@ -21,7 +22,7 @@ const page = async ({searchParams,params}: SearchParamProps) => {
             </h1>
             <div className='total-size-section'>
                 <p className='body-1'>
-                    Total: <span className='h5'>0MB</span>
+                    Total: <span className='h5'>{convertFileSize(types.length>1?totalSpace[types[0]].size+totalSpace[types[1]].size:totalSpace[types[0]].size)}</span>
                 </p>
                 <div className='sort-container'>
                     <p className='body-1 hidder text-light-200 sm:block'>Sort by</p>
