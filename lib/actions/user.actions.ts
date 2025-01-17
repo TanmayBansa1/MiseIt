@@ -108,18 +108,25 @@ export const signInUser = async ({email}:{email: string}) => {
 }
 
 export const getCurrentUser = async()=>{
-    const {account, database} = await createSessionClient();
 
-    const result = await account.get();
+    try{
 
-    const user = await database.listDocuments(
-        appwriteConfig.databaseId,
-        appwriteConfig.usersCollectionId,
-        [Query.equal("accountId", [result.$id])]
-    )
-
-    if(user.total <= 0){return null}
-    return parseStringify(user.documents[0])
+        const {account, database} = await createSessionClient();
+    
+        const result = await account.get();
+    
+        const user = await database.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.usersCollectionId,
+            [Query.equal("accountId", [result.$id])]
+        )
+    
+        if(user.total <= 0){return null}
+        return parseStringify(user.documents[0])
+    }catch(err){
+        console.log(err, "Failed to get current user");
+        // throw new Error("Failed to get current user");
+    }
 
 }
 
