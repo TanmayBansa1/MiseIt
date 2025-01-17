@@ -19,7 +19,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
                 </div>
                 <div className='flex-center p-5'>
 
-                    <Image src='illustration.svg' alt='logo' width={300} height={300} className='transition hover:scale-105 hover:rotate-12'></Image>
+                    <Image src='/Illustration.svg' alt='logo' width={300} height={300} className='transition hover:scale-105 hover:rotate-12'></Image>
                 </div>
 
             </section>

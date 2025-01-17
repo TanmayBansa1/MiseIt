@@ -33,7 +33,7 @@ const Sidebar = ({ user }: { user: { fullname: string, email: string, avatarUrl:
         </ul>
 
       </nav>
-      <Image src='/illustration.svg' alt='files' width={318} height={318} className='w-full h-auto'></Image>
+      <Image src='/Illustration.svg' alt='files' width={318} height={318} className='w-full h-auto'></Image>
 
       <div className='sidebar-user-info'>
         <Image src='/assets/images/avatar.png' alt='avatar' width={52} height={52} className='sidebar-user-avatar'></Image>
