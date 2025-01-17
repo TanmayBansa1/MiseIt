@@ -13,6 +13,13 @@ export async function uploadFile({file, ownerId, accountId, path}: UploadFilePro
     const {storage, database} = await createAdminClient();
     // console.log(accountId, ownerId);
     try{
+        const totalSpace = await getTotalSpaceUsed();
+        const MAX_STORAGE = 2 * 1024 * 1024 * 1024; // 2GB in bytes
+        
+        if (totalSpace.used + file.size > MAX_STORAGE) {
+            console.log("Storage limit of 2GB exceeded. Please delete some files to upload more.");
+            throw new Error("Storage limit of 2GB exceeded. Please delete some files to upload more.");
+        }
         const inputFile = InputFile.fromBuffer(file, file.name);
 
         const bucketFile = await storage.createFile(
@@ -172,6 +179,17 @@ export async function getTotalSpaceUsed(){
 
     const {database} = await createAdminClient();
     const currUser = await getCurrentUser();
+    if (!currUser) {
+        return {
+            image: {size: 0, latestDate: ''},
+            video: {size: 0, latestDate: ''},
+            audio: {size: 0, latestDate: ''},
+            document: {size: 0, latestDate: ''},
+            other: {size: 0, latestDate: ''},
+            used: 0,
+            all: 2*1024*1024*1024
+        };
+    }
     try{
         const files = await database.listDocuments(
             appwriteConfig.databaseId,
