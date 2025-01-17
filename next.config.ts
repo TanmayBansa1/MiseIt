@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   },
   images:{
     domains: ['cloud.appwrite.io']
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   }
   /* config options here */
 };

@@ -1,5 +1,5 @@
 "use client"
-import React, { FormEvent, MouseEvent, useState } from 'react'
+import React, { MouseEvent, useState } from 'react'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -8,7 +8,6 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-
 } from "@/components/ui/alert-dialog"
 import {
     InputOTP,
@@ -17,7 +16,6 @@ import {
 } from "@/components/ui/input-otp"
 import Image from 'next/image'
 import { Button } from './ui/button'
-import { LucideAlignVerticalJustifyCenter } from 'lucide-react'
 import { sendEmailOTP, verifyOTP } from '@/lib/actions/user.actions'
 import { useRouter } from 'next/navigation'
 

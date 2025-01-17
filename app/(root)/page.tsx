@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Models } from 'node-appwrite';
-
 import  ActionsDropdown  from '@/components/ActionDropdown';
 import  Chart  from '@/components/Chart';
 import  FormattedDateTime  from '@/components/FormattedDatetime';
