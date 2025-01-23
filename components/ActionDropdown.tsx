@@ -60,7 +60,13 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
     const actions = {
       rename: () =>
         renameFile({ fileId: file.$id, name, extension: file.extension, path }),
-      share: () => shareFile({ fileId: file.$id, emails, path }),
+      share: async () => {
+        await shareFile({ fileId: file.$id, emails, path });
+        toast({
+          title: `${file.name} shared with ${emails}`
+        })
+        return;
+      },
       delete: async () => {
         const currUser = await getCurrentUser();
         if (currUser.email !== file.owner.email) {
@@ -70,7 +76,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
           })
           return;
         }
-        deleteFile({ fileId: file.$id, bucketFileId: file.bucketFileId, path });
+        await deleteFile({ fileId: file.$id, bucketFileId: file.bucketFileId, path });
         toast({
           title: `File ${file.name} deleted`
         })

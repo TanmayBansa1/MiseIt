@@ -14,6 +14,7 @@ const page = async ({searchParams,params}: SearchParamProps) => {
     const sort = ((await searchParams)?.sort as string) || "";
     const files = await getFiles({types,searchText,sort});
     const totalSpace = await getTotalSpaceUsed();
+    console.log(totalSpace);
   return (
     <div className='page-container'>
         <section className='w-full'>

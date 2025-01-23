@@ -78,6 +78,8 @@ export const getFileType = (fileName: string) => {
   const videoExtensions = ["mp4", "avi", "mov", "mkv", "webm"];
   const audioExtensions = ["mp3", "wav", "ogg", "flac"];
 
+  console.log(`Checking file type for: ${fileName}, extension: ${extension}`);
+
   if (documentExtensions.includes(extension))
     return { type: "document", extension };
   if (imageExtensions.includes(extension)) return { type: "image", extension };
