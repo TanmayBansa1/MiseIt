@@ -17,7 +17,7 @@ function App() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
-              <Files className="h-8 w-8 text-blue-600" />
+              <Files className="h-8 w-8 text-blue" />
               <span className="text-2xl font-bold text-gray-900">MiseIt</span>
             </div>
             <a 
@@ -45,7 +45,7 @@ function App() {
                 href="https://github.com/TanmayBansa1/MiseIt"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-8 py-3 bg-blue text-white rounded-lg hover:bg-blue transition-colors"
               >
                 Get Started
               </a>
@@ -71,32 +71,32 @@ function App() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <FeatureCard 
-              icon={<Upload className="h-8 w-8 text-blue-600" />}
+              icon={<Upload className="h-8 w-8 text-blue" />}
               title="Easy File Upload"
               description="Drag and drop interface for quick and easy file uploads. Support for multiple file types."
             />
             <FeatureCard 
-              icon={<Lock className="h-8 w-8 text-blue-600" />}
+              icon={<Lock className="h-8 w-8 text-blue" />}
               title="Secure Storage"
               description="Your files are encrypted and stored securely. Complete control over file access and sharing."
             />
             <FeatureCard 
-              icon={<Share2 className="h-8 w-8 text-blue-600" />}
+              icon={<Share2 className="h-8 w-8 text-blue" />}
               title="Simple Sharing"
               description="Share files and folders with customizable access permissions and expiring links."
             />
             <FeatureCard 
-              icon={<Folder className="h-8 w-8 text-blue-600" />}
+              icon={<Folder className="h-8 w-8 text-blue" />}
               title="Organization"
               description="Create folders, add tags, and organize your files in a way that makes sense to you."
             />
             <FeatureCard 
-              icon={<Search className="h-8 w-8 text-blue-600" />}
+              icon={<Search className="h-8 w-8 text-blue" />}
               title="Quick Search"
               description="Find your files instantly with powerful search capabilities and filters."
             />
             <FeatureCard 
-              icon={<Files className="h-8 w-8 text-blue-600" />}
+              icon={<Files className="h-8 w-8 text-blue" />}
               title="File Preview"
               description="Preview documents, images, and other file types directly in your browser."
             />
@@ -123,7 +123,7 @@ function App() {
                   'Customizable workspace settings'
                 ].map((item, index) => (
                   <li key={index} className="flex items-center space-x-3">
-                    <div className="h-2 w-2 bg-blue-600 rounded-full" />
+                    <div className="h-2 w-2 bg-blue rounded-full" />
                     <span className="text-gray-700">{item}</span>
                   </li>
                 ))}
@@ -145,7 +145,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <Files className="h-8 w-8 text-blue-400" />
+              <Files className="h-8 w-8 text-blue" />
               <span className="text-2xl font-bold">MiseIt</span>
             </div>
             <div className="flex space-x-6">
@@ -153,7 +153,7 @@ function App() {
                 href="https://github.com/TanmayBansa1/MiseIt"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-400 transition-colors"
+                className="hover:text-blue transition-colors"
               >
                 GitHub
               </a>
@@ -161,7 +161,7 @@ function App() {
                 href="https://github.com/TanmayBansa1/MiseIt#readme"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-400 transition-colors"
+                className="hover:text-blue transition-colors"
               >
                 Documentation
               </a>
