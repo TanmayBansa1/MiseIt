@@ -12,6 +12,8 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import Typewriter from "typewriter-effect";
+import { useInView } from "react-intersection-observer";
+
 function App() {
   const heroTitle = "Modern File Management Made Simple";
 
@@ -93,35 +95,41 @@ function App() {
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <FeatureCard
+            <AnimatedFeatureCard
               icon={<Upload className="h-8 w-8 text-blue" />}
               title="Easy File Upload"
               description="Drag and drop interface for quick and easy file uploads. Support for multiple file types."
+              delay={0}
             />
-            <FeatureCard
+            <AnimatedFeatureCard
               icon={<Lock className="h-8 w-8 text-blue" />}
               title="Secure Storage"
               description="Your files are encrypted and stored securely. Complete control over file access and sharing."
+              delay={200}
             />
-            <FeatureCard
+            <AnimatedFeatureCard
               icon={<Share2 className="h-8 w-8 text-blue" />}
               title="Simple Sharing"
               description="Share files and folders with customizable access permissions and expiring links."
+              delay={400}
             />
-            <FeatureCard
+            <AnimatedFeatureCard
               icon={<Folder className="h-8 w-8 text-blue" />}
               title="Quick Sort"
               description="Sort your files with ease"
+              delay={600}
             />
-            <FeatureCard
+            <AnimatedFeatureCard
               icon={<Search className="h-8 w-8 text-blue" />}
               title="Quick Search"
               description="Find your files instantly with powerful search capabilities and filters."
+              delay={800}
             />
-            <FeatureCard
+            <AnimatedFeatureCard
               icon={<Files className="h-8 w-8 text-blue" />}
               title="File Preview"
               description="Preview documents, images, and other file types directly in your browser."
+              delay={1000}
             />
           </div>
         </div>
@@ -199,20 +207,76 @@ function App() {
   );
 }
 
-function FeatureCard({
-  icon,
-  title,
+function AnimatedFeatureCard({ 
+  icon, 
+  title, 
   description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
+  delay = 0
+}: { 
+  icon: React.ReactNode, 
+  title: string, 
+  description: string,
+  delay?: number
 }) {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   return (
-    <div className="bg-gray-50 p-6 rounded-lg">
-      <div className="mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+    <div 
+      ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`
+        bg-gray-50 p-6 rounded-lg 
+        transform transition-all duration-150 
+        ${inView 
+          ? 'opacity-100 translate-y-0 scale-100' 
+          : 'opacity-0 translate-y-10 scale-95'}
+        hover:-translate-y-2 
+        hover:shadow-2xl 
+        hover:bg-white 
+        group 
+        border border-transparent 
+        hover:border-blue-200 
+        hover:scale-105 
+        hover:rotate-1
+        relative 
+        overflow-hidden
+      `}
+    >
+      <div className="absolute top-0 left-0 w-full h-1 bg-blue-500 
+        transform origin-left scale-x-0 
+        group-hover:scale-x-100 
+        transition-transform duration-150"
+      ></div>
+      
+      <div className="mb-4 
+        text-blue-600 
+        transition-transform duration-150 
+        group-hover:scale-110 
+        group-hover:rotate-6"
+      >
+        {icon}
+      </div>
+      
+      <h3 className="text-xl font-semibold mb-3 
+        text-gray-800 
+        group-hover:text-blue-700 
+        transition-colors duration-150"
+      >
+        {title}
+      </h3>
+      
+      <p className="text-gray-600 
+        opacity-0 
+        transform translate-y-4 
+        group-hover:opacity-100 
+        group-hover:translate-y-0 
+        transition-all duration-150"
+      >
+        {description}
+      </p>
     </div>
   );
 }
