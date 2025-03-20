@@ -1,15 +1,20 @@
-import React from 'react';
-import { 
-  Files, 
-  Upload, 
-  Lock, 
-  Share2, 
-  Folder, 
+"use client";
+import React, { useState, useEffect } from "react";
+import {
+  Files,
+  Upload,
+  Lock,
+  Share2,
+  Folder,
   Search,
-  Github
-} from 'lucide-react';
-
+  Github,
+} from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import Typewriter from "typewriter-effect";
 function App() {
+  const heroTitle = "Modern File Management Made Simple";
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Hero Section */}
@@ -17,12 +22,17 @@ function App() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
-              <Files className="h-8 w-8 text-blue" />
+              <Image
+                src="/assets/images/storeitlogo.png"
+                alt="logo"
+                width={32}
+                height={32}
+              />
               <span className="text-2xl font-bold text-gray-900">MiseIt</span>
             </div>
-            <a 
-              href="https://github.com/TanmayBansa1/MiseIt" 
-              target="_blank" 
+            <a
+              href="https://github.com/TanmayBansa1/MiseIt"
+              target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors"
             >
@@ -35,21 +45,34 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <h1 className="text-5xl font-bold text-gray-900 mb-6">
-              Modern File Management Made Simple
+              <Typewriter
+                onInit={(typewriter) => {
+                  typewriter
+                    .typeString(heroTitle)
+
+                    .pauseFor(1000)
+                    .deleteAll()
+                    .start();
+                }}
+                options={{
+                  autoStart: true,
+                  loop: true,
+                }}
+              />
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              MiseIt is a powerful file management platform that helps you store, organize, and access your files with ease. Built with Next.js for lightning-fast performance.
+              MiseIt is a powerful file management platform that helps you
+              store, organize, and access your files with ease. Built with
+              Next.js for lightning-fast performance.
             </p>
             <div className="flex justify-center space-x-4">
-              <a 
-                href="https://github.com/TanmayBansa1/MiseIt"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/sign-in"
                 className="px-8 py-3 bg-blue text-white rounded-lg hover:bg-blue transition-colors"
               >
                 Get Started
-              </a>
-              <a 
+              </Link>
+              <a
                 href="https://github.com/TanmayBansa1/MiseIt#readme"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -68,34 +91,34 @@ function App() {
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
             Powerful Features for Modern File Management
           </h2>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <FeatureCard 
+            <FeatureCard
               icon={<Upload className="h-8 w-8 text-blue" />}
               title="Easy File Upload"
               description="Drag and drop interface for quick and easy file uploads. Support for multiple file types."
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<Lock className="h-8 w-8 text-blue" />}
               title="Secure Storage"
               description="Your files are encrypted and stored securely. Complete control over file access and sharing."
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<Share2 className="h-8 w-8 text-blue" />}
               title="Simple Sharing"
               description="Share files and folders with customizable access permissions and expiring links."
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<Folder className="h-8 w-8 text-blue" />}
-              title="Organization"
-              description="Create folders, add tags, and organize your files in a way that makes sense to you."
+              title="Quick Sort"
+              description="Sort your files with ease"
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<Search className="h-8 w-8 text-blue" />}
               title="Quick Search"
               description="Find your files instantly with powerful search capabilities and filters."
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<Files className="h-8 w-8 text-blue" />}
               title="File Preview"
               description="Preview documents, images, and other file types directly in your browser."
@@ -113,14 +136,17 @@ function App() {
                 Modern Interface for Seamless Experience
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                MiseIt provides a clean and intuitive interface that makes file management a breeze. With features like drag-and-drop upload, quick search, and easy sharing, managing your files has never been easier.
+                MiseIt provides a clean and intuitive interface that makes file
+                management a breeze. With features like drag-and-drop upload,
+                quick search, and easy sharing, managing your files has never
+                been easier.
               </p>
               <ul className="space-y-4">
                 {[
-                  'Built with Next.js for optimal performance',
-                  'Responsive design works on all devices',
-                  'Real-time updates and notifications',
-                  'Customizable workspace settings'
+                  "Built with Next.js for optimal performance",
+                  "Responsive design works on all devices",
+                  "Real-time updates and notifications",
+                  "Customizable workspace settings",
                 ].map((item, index) => (
                   <li key={index} className="flex items-center space-x-3">
                     <div className="h-2 w-2 bg-blue rounded-full" />
@@ -130,7 +156,7 @@ function App() {
               </ul>
             </div>
             <div className="flex-1">
-              <img 
+              <img
                 src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
                 alt="MiseIt Interface Demo"
                 className="rounded-lg shadow-xl"
@@ -145,11 +171,16 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <Files className="h-8 w-8 text-blue" />
+              <Image
+                src="/assets/images/storeitlogo.png"
+                alt="logo"
+                width={32}
+                height={32}
+              />
               <span className="text-2xl font-bold">MiseIt</span>
             </div>
             <div className="flex space-x-6">
-              <a 
+              <a
                 href="https://github.com/TanmayBansa1/MiseIt"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -157,18 +188,10 @@ function App() {
               >
                 GitHub
               </a>
-              <a 
-                href="https://github.com/TanmayBansa1/MiseIt#readme"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-blue transition-colors"
-              >
-                Documentation
-              </a>
             </div>
           </div>
           <div className="mt-8 text-center text-gray-400">
-            <p>© 2024 MiseIt. All rights reserved.</p>
+            <p> 2024 MiseIt. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -176,7 +199,15 @@ function App() {
   );
 }
 
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
+function FeatureCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
   return (
     <div className="bg-gray-50 p-6 rounded-lg">
       <div className="mb-4">{icon}</div>
