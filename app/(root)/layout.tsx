@@ -11,7 +11,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
 
     const user = await getCurrentUser();
     if(!user){
-        redirect('/sign-in')
+        redirect('/landing')
     } 
     return (
         <main className='flex min-h-screen'>
