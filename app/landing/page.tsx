@@ -105,31 +105,31 @@ function App() {
               icon={<Lock className="h-8 w-8 text-blue" />}
               title="Secure Storage"
               description="Your files are encrypted and stored securely. Complete control over file access and sharing."
-              delay={200}
+              delay={0}
             />
             <AnimatedFeatureCard
               icon={<Share2 className="h-8 w-8 text-blue" />}
               title="Simple Sharing"
               description="Share files and folders with customizable access permissions and expiring links."
-              delay={400}
+              delay={0}
             />
             <AnimatedFeatureCard
               icon={<Folder className="h-8 w-8 text-blue" />}
               title="Quick Sort"
               description="Sort your files with ease"
-              delay={600}
+              delay={0}
             />
             <AnimatedFeatureCard
               icon={<Search className="h-8 w-8 text-blue" />}
               title="Quick Search"
               description="Find your files instantly with powerful search capabilities and filters."
-              delay={800}
+              delay={0}
             />
             <AnimatedFeatureCard
               icon={<Files className="h-8 w-8 text-blue" />}
               title="File Preview"
               description="Preview documents, images, and other file types directly in your browser."
-              delay={1000}
+              delay={0}
             />
           </div>
         </div>
@@ -153,10 +153,10 @@ function App() {
                 {[
                   "Built with Next.js for optimal performance",
                   "Responsive design works on all devices",
-                  "Real-time updates and notifications",
-                  "Customizable workspace settings",
+                  "Flexible file sharing options for effortless collaboration",
+                  "Free 2GB space for everyone",
                 ].map((item, index) => (
-                  <li key={index} className="flex items-center space-x-3">
+                  <li key={index} className="flex items-center space-x-3 animate-pulse">
                     <div className="h-2 w-2 bg-blue rounded-full" />
                     <span className="text-gray-700">{item}</span>
                   </li>
@@ -167,7 +167,7 @@ function App() {
               <img
                 src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
                 alt="MiseIt Interface Demo"
-                className="rounded-lg shadow-xl"
+                className="rounded-lg shadow-xl hover:scale-105 hover:rotate-1 ease-in-out"
               />
             </div>
           </div>
@@ -229,7 +229,7 @@ function AnimatedFeatureCard({
       style={{ transitionDelay: `${delay}ms` }}
       className={`
         bg-gray-50 p-6 rounded-lg 
-        transform transition-all duration-150 
+        transform transition-all duration-300 
         ${inView 
           ? 'opacity-100 translate-y-0 scale-100' 
           : 'opacity-0 translate-y-10 scale-95'}
@@ -238,22 +238,23 @@ function AnimatedFeatureCard({
         hover:bg-white 
         group 
         border border-transparent 
-        hover:border-blue-200 
+        hover:border-blue 
         hover:scale-105 
         hover:rotate-1
         relative 
         overflow-hidden
+        ease-in-out
       `}
     >
-      <div className="absolute top-0 left-0 w-full h-1 bg-blue-500 
+      <div className="absolute top-0 left-0 w-full h-1 bg-blue
         transform origin-left scale-x-0 
         group-hover:scale-x-100 
-        transition-transform duration-150"
+        transition-transform duration-300 ease-in-out"
       ></div>
       
       <div className="mb-4 
-        text-blue-600 
-        transition-transform duration-150 
+        text-blue 
+        transition-transform duration-300 
         group-hover:scale-110 
         group-hover:rotate-6"
       >
@@ -262,8 +263,8 @@ function AnimatedFeatureCard({
       
       <h3 className="text-xl font-semibold mb-3 
         text-gray-800 
-        group-hover:text-blue-700 
-        transition-colors duration-150"
+        group-hover:text-blue 
+        transition-colors duration-300"
       >
         {title}
       </h3>
@@ -273,7 +274,7 @@ function AnimatedFeatureCard({
         transform translate-y-4 
         group-hover:opacity-100 
         group-hover:translate-y-0 
-        transition-all duration-150"
+        transition-all duration-300"
       >
         {description}
       </p>
