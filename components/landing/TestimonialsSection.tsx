@@ -6,20 +6,20 @@ import { TestimonialCard } from "@/components/landing/TestimonialCard";
 export const TestimonialsSection: React.FC = () => {
   const testimonials = [
     {
-      name: "Sarah Chen",
+      name: "Om Agarwal",
       role: "Product Designer",
       content: "MiseIt has completely transformed how I manage my design files. The interface is beautiful and the features are exactly what I need.",
       rating: 5
     },
     {
-      name: "Michael Rodriguez",
+      name: "Aryan Tayade",
       role: "Software Engineer",
-      content: "As a developer, I appreciate the clean API and fast performance. MiseIt makes file sharing with my team seamless.",
+      content: "As a developer, I appreciate the clean look and fast performance. MiseIt makes file sharing with my team seamless.",
       rating: 5
     },
     {
-      name: "Emily Watson",
-      role: "Marketing Manager",
+      name: "Gaurav Jain",
+      role: "Founder and Entrepreneur",
       content: "The sharing features are incredible. I can easily collaborate with my team and clients without any friction.",
       rating: 5
     }
