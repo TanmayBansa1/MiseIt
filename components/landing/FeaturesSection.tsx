@@ -46,11 +46,11 @@ export const FeaturesSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-8">
+                      <h2 className="text-5xl md:text-6xl font-display font-black text-white mb-8">
             Everything You Need for
             <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent"> Modern File Management</span>
           </h2>
-          <p className="text-2xl text-gray-400 max-w-4xl mx-auto font-light">
+                      <p className="text-2xl text-gray-400 max-w-4xl mx-auto font-sans font-light">
             Powerful features designed to make file management effortless and secure
           </p>
         </motion.div>

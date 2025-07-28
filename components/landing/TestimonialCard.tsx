@@ -28,13 +28,13 @@ export function TestimonialCard({ name, role, content, rating, delay = 0 }: {
           ))}
         </div>
         
-        <p className="text-gray-300 mb-8 leading-relaxed text-lg">
+        <p className="text-gray-300 mb-8 leading-relaxed text-lg font-sans">
           "{content}"
         </p>
         
         <div>
-          <div className="font-bold text-white text-xl">{name}</div>
-          <div className="text-cyan-400 font-medium">{role}</div>
+          <div className="font-display font-bold text-white text-xl">{name}</div>
+          <div className="text-cyan-400 font-sans font-medium">{role}</div>
         </div>
       </motion.div>
     );

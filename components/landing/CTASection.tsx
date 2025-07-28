@@ -15,10 +15,10 @@ export const CTASection: React.FC = () => {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-8">
+                      <h2 className="text-5xl md:text-6xl font-display font-black text-white mb-8">
             Ready to Transform Your File Management?
           </h2>
-          <p className="text-2xl text-cyan-100 mb-12 max-w-4xl mx-auto font-light">
+                      <p className="text-2xl text-cyan-100 mb-12 max-w-4xl mx-auto font-sans font-light">
             Join thousands of users who have already discovered the power of modern file management with MiseIt.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-y-0 sm:space-x-8">
@@ -28,7 +28,7 @@ export const CTASection: React.FC = () => {
             >
               <div className="relative flex items-center space-x-3">
                 <Rocket className="h-6 w-6 group-hover:animate-bounce" />
-                <span className="text-xl font-bold tracking-wide">Start Today</span>
+                <span className="text-xl font-display font-bold tracking-wide">Start Today</span>
                 <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
               </div>
             </Link>
@@ -40,7 +40,7 @@ export const CTASection: React.FC = () => {
             >
               <div className="relative flex items-center space-x-3">
                 <Github className="h-6 w-6" />
-                <span className="text-xl font-bold tracking-wide">View on GitHub</span>
+                <span className="text-xl font-display font-bold tracking-wide">View on GitHub</span>
               </div>
             </a>
           </div>

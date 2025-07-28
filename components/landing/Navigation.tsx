@@ -33,7 +33,7 @@ export const Navigation: React.FC<NavigationProps> = ({ opacity }) => {
               />
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-ping"></div>
             </div>
-            <span className="text-3xl font-black bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent tracking-tight">
+            <span className="text-3xl font-display font-black bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent tracking-tight">
               MiseIt
             </span>
           </motion.div>

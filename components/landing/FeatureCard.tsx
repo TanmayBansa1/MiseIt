@@ -28,11 +28,11 @@ export function FeatureCard({ icon, title, description, color, delay = 0 }: {
           {icon}
         </div>
   
-        <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-cyan-400 transition-colors duration-300">
+        <h3 className="text-2xl font-display font-bold text-white mb-6 group-hover:text-cyan-400 transition-colors duration-300">
           {title}
         </h3>
   
-        <p className="text-gray-400 leading-relaxed text-lg">
+        <p className="text-gray-400 leading-relaxed text-lg font-sans">
           {description}
         </p>
       </motion.div>

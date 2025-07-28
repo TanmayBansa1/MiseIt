@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
                 className="relative rounded-xl"
               />
             </div>
-            <span className="text-3xl font-black bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-3xl font-display font-black bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
               MiseIt
             </span>
           </div>

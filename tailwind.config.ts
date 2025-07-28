@@ -77,10 +77,13 @@ const config: Config = {
   			}
   		},
   		fontFamily: {
-  			poppins: [
-  				'var(--font-poppins)'
-  			]
-  		},
+			sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+			display: ['var(--font-oswald)', 'Oswald', 'sans-serif'],
+			mono: ['var(--font-mono)', 'monospace'],
+			poppins: [
+				'var(--font-poppins)'
+			]
+		},
   		boxShadow: {
   			'drop-1': '0px 10px 30px 0px rgba(66, 71, 97, 0.1)',
   			'drop-2': '0 8px 30px 0 rgba(65, 89, 214, 0.3)',

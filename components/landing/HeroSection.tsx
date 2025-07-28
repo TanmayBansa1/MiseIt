@@ -46,7 +46,7 @@ export const HeroSection: React.FC = () => {
             className="inline-flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-xl border border-cyan-400/30 rounded-full text-sm font-bold mb-8 shadow-2xl"
           >
             <Sparkles className="h-5 w-5 text-cyan-400 animate-pulse" />
-            <span className="text-cyan-100 font-semibold tracking-wide">• LIGHTNING FAST</span>
+                          <span className="text-cyan-100 font-sans font-semibold tracking-wide">• LIGHTNING FAST</span>
             <Sparkles className="h-5 w-5 text-cyan-400 animate-pulse" />
           </motion.div>
 
@@ -57,7 +57,7 @@ export const HeroSection: React.FC = () => {
             transition={{ delay: 0.5, duration: 1 }}
             className="mb-12"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-[5rem] font-black mb-8 leading-none tracking-tight drop-shadow-2xl">
+            <h1 className="text-4xl md:text-5xl lg:text-[5rem] font-display font-black mb-8 leading-none tracking-tight drop-shadow-2xl">
               <Typewriter
                 onInit={(typewriter) => {
                   typewriter
@@ -81,12 +81,12 @@ export const HeroSection: React.FC = () => {
           </motion.div>
 
           {/* Subtitle with Gradient Text */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 1 }}
-            className="text-2xl md:text-3xl text-gray-300 max-w-5xl mx-auto mb-16 leading-relaxed font-light"
-          >
+                      <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 1 }}
+              className="text-2xl md:text-3xl text-gray-300 max-w-5xl mx-auto mb-16 leading-relaxed font-sans font-light"
+            >
             Experience the <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent font-semibold">future of file management</span> with our intuitive, secure, and lightning-fast platform. 
             Store, organize, and share your files with <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent font-semibold">unprecedented ease</span>.
           </motion.p>
@@ -105,7 +105,7 @@ export const HeroSection: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative flex items-center space-x-3">
                 <Rocket className="h-6 w-6 group-hover:animate-bounce" />
-                <span className="text-xl font-bold tracking-wide">Get Started</span>
+                <span className="text-xl font-display font-bold tracking-wide">Get Started</span>
                 <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
               </div>
             </Link>
@@ -117,7 +117,7 @@ export const HeroSection: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative flex items-center space-x-3">
                 <Target className="h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                <span className="text-xl font-bold tracking-wide">Explore Features</span>
+                <span className="text-xl font-display font-bold tracking-wide">Explore Features</span>
                 <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
               </div>
             </a>
@@ -140,8 +140,8 @@ export const HeroSection: React.FC = () => {
               >
                 <div className="text-center">
                   <div className="flex justify-center mb-3">{stat.icon}</div>
-                  <div className="text-4xl font-black text-white mb-2">{stat.number}</div>
-                  <div className="text-gray-300 font-medium">{stat.label}</div>
+                  <div className="text-4xl font-display font-black text-white mb-2">{stat.number}</div>
+                  <div className="text-gray-300 font-sans font-medium">{stat.label}</div>
                 </div>
               </motion.div>
             ))}
