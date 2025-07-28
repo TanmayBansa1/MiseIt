@@ -25,11 +25,11 @@ export const DemoSection: React.FC = () => {
             viewport={{ once: true }}
             className="flex-1"
           >
-            <h2 className="text-5xl md:text-6xl font-black text-white mb-8">
+            <h2 className="text-5xl md:text-6xl font-display font-black text-white mb-8">
               Beautiful Interface,
               <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent"> Powerful Features</span>
             </h2>
-            <p className="text-2xl text-gray-300 mb-12 leading-relaxed font-light">
+            <p className="text-2xl text-gray-300 mb-12 leading-relaxed font-sans font-light">
               Experience a modern, intuitive interface that makes file management feel effortless. 
               Every feature is designed with user experience in mind.
             </p>
@@ -45,7 +45,7 @@ export const DemoSection: React.FC = () => {
                   className="flex items-center space-x-4"
                 >
                   <CheckCircle className="h-8 w-8 text-cyan-400 flex-shrink-0" />
-                  <span className="text-xl text-gray-300 font-medium">{item}</span>
+                  <span className="text-xl text-gray-300 font-sans font-medium">{item}</span>
                 </motion.div>
               ))}
             </div>
@@ -62,7 +62,7 @@ export const DemoSection: React.FC = () => {
                 className="group relative inline-flex items-center space-x-3 px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-3xl hover:from-cyan-400 hover:to-blue-500 transition-all duration-500 hover:scale-110 shadow-2xl hover:shadow-cyan-500/25 border border-cyan-400/30"
               >
                 <Rocket className="h-6 w-6 group-hover:animate-bounce" />
-                <span className="text-xl font-bold tracking-wide">Try MiseIt Now</span>
+                <span className="text-xl font-display font-bold tracking-wide">Try MiseIt Now</span>
                 <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
               </Link>
             </motion.div>

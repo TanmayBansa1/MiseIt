@@ -35,10 +35,10 @@ export const TestimonialsSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-8">
+                      <h2 className="text-5xl md:text-6xl font-display font-black text-white mb-8">
             Loved by Users Worldwide
           </h2>
-          <p className="text-2xl text-gray-400 max-w-4xl mx-auto font-light">
+                      <p className="text-2xl text-gray-400 max-w-4xl mx-auto font-sans font-light">
             Join thousands of users who trust MiseIt for their file management needs
           </p>
         </motion.div>
