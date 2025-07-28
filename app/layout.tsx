@@ -1,10 +1,23 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Poppins } from "next/font/google";
-const poppins = Poppins({
+import { Inter, JetBrains_Mono, Oswald } from "next/font/google";
+
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-poppins",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
+  display: "swap",
 });
 export const metadata: Metadata = {
   title: "MiseIt",
@@ -19,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} font-poppins antialiased`}
+        className={`${inter.variable} ${jetbrainsMono.variable} ${oswald.variable} font-sans antialiased`}
       >
         {children}
       </body>

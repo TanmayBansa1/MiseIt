@@ -8,7 +8,26 @@
   }
 
   body {
-    @apply bg-white text-dark-200 min-h-screen remove-scrollbar;
+    @apply bg-white text-dark-200 min-h-screen remove-scrollbar font-sans;
+  }
+
+  /* Typography improvements */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  /* Better letter spacing for display text */
+  .font-display {
+    letter-spacing: -0.02em;
+  }
+
+  /* Improved line heights */
+  .leading-tight {
+    line-height: 1.1;
+  }
+
+  .leading-relaxed {
+    line-height: 1.7;
   }
 
   
