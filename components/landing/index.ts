@@ -1,0 +1,10 @@
+export { Navigation } from './Navigation';
+export { HeroSection } from './HeroSection';
+export { FeaturesSection } from './FeaturesSection';
+export { DemoSection } from './DemoSection';
+export { TestimonialsSection } from './TestimonialsSection';
+export { CTASection } from './CTASection';
+export { Footer } from './Footer';
+export { AnimatedBackground } from './AnimatedBackground';
+export { FeatureCard } from './FeatureCard';
+export { TestimonialCard } from './TestimonialCard'; 
